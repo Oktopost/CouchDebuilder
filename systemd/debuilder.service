@@ -1,0 +1,13 @@
+[Unit]
+Description=CouchDeBuilder
+Documentation=https://github.com/Oktopost/CouchDebuilder
+After=network.target
+
+[Service]
+Type=simple
+User=vagrant
+ExecStart=/usr/bin/node /var/www/CouchDebuilder/index.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

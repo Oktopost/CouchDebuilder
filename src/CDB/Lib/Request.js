@@ -19,8 +19,6 @@ namespace('CDB.Lib', function(root)
 	
 	Request.prototype._processResponse = function(response)
 	{
-		var onSuccess = this._onSuccessEvent;
-		
 		response.on('error', this._onErrorEvent.trigger);
 		response.on('end', this._onCompleteEvent.trigger);
 		response.on('data', this._onGotChunkEvent.trigger);
@@ -34,8 +32,8 @@ namespace('CDB.Lib', function(root)
 		
 		response.on('end', function()
 		{
-			onSuccess.trigger(result);
-		});
+			this._onSuccessEvent.trigger(result);
+		}.bind(this));
 	};
 	
 	

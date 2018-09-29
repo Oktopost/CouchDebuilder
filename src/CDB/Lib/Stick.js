@@ -15,9 +15,10 @@ namespace('CDB.Lib', function(root)
 		this._config = Config.instance();
 	};
 	
+	
 	Stick.prototype._onTouchedIt = function(db, documentId, viewId)
 	{
-		console.log('I touched ', db, documentId, viewId);
+		console.log('CDB INFO:', 'Touched ', db + '/' + documentId + '/' + viewId);
 	};
 	
 	Stick.prototype._prepareTouch = function(db, documentId, viewId)
@@ -34,7 +35,7 @@ namespace('CDB.Lib', function(root)
 		{
 			if (!is(document.doc) || !is(document.doc.views))
 			{
-				console.error('Missing views ', db, JSON.stringify(document));
+				console.warn('CDB WARNING:', 'Missing views ', db, JSON.stringify(document));
 				return true;
 			}
 			

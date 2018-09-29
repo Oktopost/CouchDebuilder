@@ -23,7 +23,7 @@ namespace('CDB.Lib', function(root)
 		
 		if (!is(json.rows))
 		{
-			console.error(db, response);
+			console.error('CDB Error:', db, response);
 			return;
 		}
 		

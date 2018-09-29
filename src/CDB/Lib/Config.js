@@ -12,10 +12,10 @@ namespace('CDB.Lib', function(root)
 	{
 		classify(this);
 		
-		var path = 'config.json';
+		var path = __dirname + '/../../../config.json';
 		
 		if (!is(fs.existsSync(path)))
-			throw new Error('config.json does not exists');
+			throw new Error('CDB ERROR: config.json does not exists in ' + path);
 		
 		nconf.use('file', {file: path});
 	};

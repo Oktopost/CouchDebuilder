@@ -33,7 +33,18 @@ namespace('CDB.Lib', function(root)
 	
 	Listener.prototype._onGotChunk = function(data)
 	{
-		var row = JSON.parse(data.toString());
+		var row;
+		
+		try
+		{
+			row = JSON.parse(data.toString());
+		}
+		catch (e)
+		{
+			console.log('CDB ERROR:', e, data);
+			return;
+		}
+		
 		var dbName = row.db_name;
 		
 		if (!is(this._dbs[dbName]))
@@ -52,7 +63,7 @@ namespace('CDB.Lib', function(root)
 	
 	Listener.prototype._onError = function(error)
 	{
-		console.error(error);
+		console.error('CDB ERROR:', error);
 	};
 	
 	
