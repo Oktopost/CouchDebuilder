@@ -18,7 +18,7 @@ namespace('CDB.Lib', function(root)
 	
 	Stick.prototype._onTouchedIt = function(db, documentId, viewId)
 	{
-		console.log('CDB INFO:', 'Touched ', db + '/' + documentId + '/' + viewId);
+		//console.log('CDB INFO:', 'Touched ', db + '/' + documentId + '/' + viewId);
 	};
 	
 	Stick.prototype._prepareTouch = function(db, documentId, viewId)
