@@ -11,9 +11,9 @@ namespace('CDB', function(root)
 		classify(this);
 		
 		this._stick = new Stick();
-		
 		this._documents = new Documents();
 		this._listner = new Listener();
+		
 		this._listner.onReachedLimit(this._touchDB);
 	};
 	

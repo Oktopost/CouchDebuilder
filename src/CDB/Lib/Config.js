@@ -52,6 +52,16 @@ namespace('CDB.Lib', function(root)
 		return nconf.get('documentsCacheTTLInSeconds');
 	};
 	
+	Config.prototype.getConnectionTimeoutInSeconds = function()
+	{
+		return nconf.get('connectionTimeoutInSeconds');
+	};
+	
+	Config.prototype.getHeartbeatInSeconds = function ()
+	{
+		return nconf.get('heartbeatInSeconds');
+	};
+	
 	
 	this.Config = Singleton(Config);
 });

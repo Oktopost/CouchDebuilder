@@ -7,18 +7,20 @@ namespace('CDB.Lib', function(root)
 	var classify	= root.Classy.classify;
 	
 	
-	
 	var Listener = function() 
 	{
 		classify(this);
 		
 		this._config = Config.instance();
 		
+		var connectionTimeout = this._config.getConnectionTimeoutInSeconds() * 1000;
+		var heartbeat = this._config.getHeartbeatInSeconds() * 1000;
+		
 		this._maxChangesPerDB = this._config.getMaxUpdatesPerDB();
 		
 		this._onReachedLimitEvent = new Event('Listener.OnReachedLimit');
 		
-		this._endPoint = '/_db_updates?feed=continuous';
+		this._endPoint = '/_db_updates?feed=continuous&heartbeat=' + heartbeat + '&timeout=' + connectionTimeout;
 		
 		this._dbs = {};
 	};
@@ -33,15 +35,18 @@ namespace('CDB.Lib', function(root)
 	
 	Listener.prototype._onGotChunk = function(data)
 	{
-		var row;
+		var row = data.toString().trim();
+		
+		if (!is(row))
+			return;
 		
 		try
 		{
-			row = JSON.parse(data.toString());
+			row = JSON.parse(row);
 		}
 		catch (e)
 		{
-			console.log('CDB ERROR:', e, data);
+			console.log('CDB ERROR:', e, row);
 			return;
 		}
 		
@@ -64,6 +69,7 @@ namespace('CDB.Lib', function(root)
 	Listener.prototype._onError = function(error)
 	{
 		console.error('CDB ERROR:', error);
+		setTimeout(this.listen, 5000);
 	};
 	
 	
