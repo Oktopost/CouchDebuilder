@@ -1,6 +1,6 @@
 {
   "name": "couchdebuilder",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "rebuilding couchdb index on fly",
   "main": "index.js",
   "scripts": {

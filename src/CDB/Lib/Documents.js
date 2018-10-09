@@ -22,10 +22,7 @@ namespace('CDB.Lib', function(root)
 		var json = JSON.parse(response);
 		
 		if (!is(json.rows))
-		{
-			console.error('CDB Error:', db, response);
 			return;
-		}
 		
 		this._perDB[db] = {
 			timestamp: +new Date(),
