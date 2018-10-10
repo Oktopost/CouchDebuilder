@@ -30,15 +30,22 @@ namespace('CDB.Lib', function(root)
 	
 	Listener.prototype._triggerOnReachedLimit = function(dbName)
 	{
+		this._cancelAwait(dbName);
 		this._onReachedLimitEvent.trigger(dbName);
 		this._dbs[dbName] = 0;
 	};
 	
+	Listener.prototype._cancelAwait = function(dbName)
+	{
+		if (!is(this._timeouts[dbName]))
+			return;
+		
+		clearTimeout(this._timeouts[dbName]);
+	};
+	
 	Listener.prototype._setAwaitUpdate = function(dbName)
 	{
-		if (is(this._timeouts[dbName]))
-			clearTimeout(this._timeouts[dbName]);
-		
+		this._cancelAwait(dbName);
 		this._timeouts[dbName] = setTimeout(this._triggerOnReachedLimit.bind(this, dbName), this._maxAwaitPerDB);		
 	};
 	
