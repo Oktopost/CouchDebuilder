@@ -61,11 +61,11 @@ namespace('CDB.Lib', function(root)
 		
 		var dbName = row.db_name;
 		
-		if (!is.defined(this._dbs[dbName]))
+		if (!is(this._dbs[dbName]))
+		{
 			this._dbs[dbName] = 0;
-		
-		if (this._dbs[dbName] === 0)
 			this._setAwaitUpdate(dbName);
+		}
 		
 		this._dbs[dbName]++;
 		
