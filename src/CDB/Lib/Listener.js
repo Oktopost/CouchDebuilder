@@ -39,13 +39,7 @@ namespace('CDB.Lib', function(root)
 		if (is(this._timeouts[dbName]))
 			clearTimeout(this._timeouts[dbName]);
 		
-		var currentCounter = this._dbs[dbName];
-		
-		this._timeouts[dbName] = setTimeout(function()
-		{
-			if (this._dbs[dbName] === currentCounter)
-				this._triggerOnReachedLimit(dbName);
-		}.bind(this), this._maxAwaitPerDB);		
+		this._timeouts[dbName] = setTimeout(this._triggerOnReachedLimit.bind(this, dbName), this._maxAwaitPerDB);		
 	};
 	
 	Listener.prototype._onGotChunk = function(data)
@@ -70,8 +64,10 @@ namespace('CDB.Lib', function(root)
 		if (!is.defined(this._dbs[dbName]))
 			this._dbs[dbName] = 0;
 		
+		if (this._dbs[dbName] === 0)
+			this._setAwaitUpdate(dbName);
+		
 		this._dbs[dbName]++;
-		this._setAwaitUpdate(dbName);
 		
 		if (this._dbs[dbName] >= this._maxChangesPerDB)
 			this._triggerOnReachedLimit(dbName)
