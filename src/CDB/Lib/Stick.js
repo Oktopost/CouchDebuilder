@@ -25,7 +25,7 @@ namespace('CDB.Lib', function(root)
 	{
 		var request = new Request();
 		request.onComplete(this._onTouchedIt.bind(this, db, documentId, viewId));
-		request.get(this._config.getUrl('/' + db + '/' + documentId + '/_view/' + viewId + '?stale=update_after'));
+		request.get(this._config.getUrl('/' + db + '/' + documentId + '/_view/' + viewId + '?stale=update_after&limit=0'));
 	};
 	
 	
