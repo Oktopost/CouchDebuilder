@@ -1,7 +1,8 @@
 {
 	"host": "http://admin:admin@192.168.10.10",
 	"port": 5984,
-	"maxUpdatesPerDB": 100,
+	"maxUpdatesPerDB": 200,
+	"minUpdatesBeforeAwait": 100,
 	"maxAwaitPerDBInSeconds": 10,
 	"heartbeatInSeconds": 60,
 	"connectionTimeoutInSeconds": 60,

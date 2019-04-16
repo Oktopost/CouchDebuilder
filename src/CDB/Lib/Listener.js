@@ -18,6 +18,7 @@ namespace('CDB.Lib', function(root)
 		
 		this._maxChangesPerDB = this._config.getMaxUpdatesPerDB();
 		this._maxAwaitPerDB = this._config.getMaxAwaitPerDBInSeconds() * 1000;
+		this._minChangesBeforeUpdate = this._config.getMinUpdatesBeforeAwait();
 		
 		this._onReachedLimitEvent = new Event('Listener.OnReachedLimit');
 		
@@ -30,6 +31,7 @@ namespace('CDB.Lib', function(root)
 	
 	Listener.prototype._triggerOnReachedLimit = function(dbName)
 	{
+		//console.log(new Date(), 'triggerOnReachedLimit', dbName);
 		this._cancelAwait(dbName);
 		this._onReachedLimitEvent.trigger(dbName);
 		this._dbs[dbName] = 0;
@@ -71,13 +73,22 @@ namespace('CDB.Lib', function(root)
 		if (!is(this._dbs[dbName]))
 		{
 			this._dbs[dbName] = 0;
-			this._setAwaitUpdate(dbName);
 		}
 		
 		this._dbs[dbName]++;
 		
+		//console.log(new Date(), dbName, this._dbs[dbName]);
+		
 		if (this._dbs[dbName] >= this._maxChangesPerDB)
+		{
+			//console.log(new Date(), 'maxChangesPerDB reached', dbName);
 			this._triggerOnReachedLimit(dbName)
+		}
+		else if (this._dbs[dbName] >= this._minChangesBeforeUpdate && !is(this._timeouts[dbName]))
+		{
+			//console.log(new Date(), 'startTimerForUpdate', dbName);
+			this._setAwaitUpdate(dbName);
+		}
 	};
 	
 	Listener.prototype._onComplete = function()

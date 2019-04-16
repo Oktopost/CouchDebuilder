@@ -47,10 +47,15 @@ namespace('CDB.Lib', function(root)
 		return nconf.get('maxUpdatesPerDB');
 	};
 	
+	Config.prototype.getMinUpdatesBeforeAwait = function()
+	{
+		return nconf.get('minUpdatesBeforeAwait') || 1;
+	};
+	
 	Config.prototype.getMaxAwaitPerDBInSeconds = function()
 	{
 		return nconf.get('maxAwaitPerDBInSeconds') || 10;
-	}
+	};
 	
 	Config.prototype.getDocumentsCacheTTLInSeconds = function()
 	{
